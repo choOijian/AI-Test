@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real or Ai?</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="app-container">
+    
+    <!-- 1. HOME -->
+    <section id="screen-home" class="screen active">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      <div class="content-wrapper home-wrapper">
+        <div class="home-center">
+          <h1 class="home-title">Real or Ai?</h1>
+          <h2 class="home-subtitle">당신의 AI 판별 능력은?</h2>
+          <p class="home-body">
+            이미지, 텍스트, 영상...<br>
+            모든 것이 AI로 만들어지는 시대<br><br>
+            당신의 감각과 판단은<br>
+            어디까지 믿을 수 있을까요?
+          </p>
+          <div class="btn-layout-group">
+            <button class="editorial-btn" id="btn-to-pretest">테스트 시작하기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PRE TEST -->
+    <section id="screen-pretest" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node active">1</div>
+            <div class="step-line"></div>
+            <div class="step-node">2</div>
+            <div class="step-line"></div>
+            <div class="step-node">3</div>
+            <div class="step-line"></div>
+            <div class="step-node">4</div>
+            <div class="step-line"></div>
+            <div class="step-node">5</div>
+            <div class="step-line"></div>
+            <div class="step-node">6</div>
+            <div class="step-line"></div>
+            <div class="step-node">7</div>
+            <div class="step-line"></div>
+            <div class="step-node">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      <div class="content-wrapper">
+        <div class="pretest-center">
+          <h2 class="pretest-title">시작하기 전에,<br>당신에 대해 알려주세요.</h2>
+          
+          <div class="input-group">
+            <label class="input-label" for="input-nickname">닉네임</label>
+            <input type="text" id="input-nickname" class="input-text" placeholder="닉네임을 입력하세요">
+          </div>
+
+          <div class="input-group">
+            <div class="ui-label-small">예상 정확도</div>
+            <label class="input-question" for="slider-expected">당신은 AI 생성물을 얼마나 잘 구별할 수 있다고 생각하나요?</label>
+            <div class="slider-container">
+              <div class="slider-labels">
+                <span>0%</span>
+                <span>100%</span>
+              </div>
+              <input type="range" id="slider-expected" class="editorial-range" min="0" max="100" value="50">
+              <div class="slider-value-wrapper">
+                <div class="slider-value-display">
+                  <div class="slider-bubble" id="slider-bubble">50%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-layout-group">
+          <button class="editorial-btn" id="btn-pretest-back" style="background-color: transparent; border-color: transparent; color: var(--text-primary);">이전</button>
+          <button class="editorial-btn" id="btn-start-test">테스트 시작</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. IMAGE TEST -->
+    <section id="screen-image-test" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node active">1</div>
+            <div class="step-line"></div>
+            <div class="step-node">2</div>
+            <div class="step-line"></div>
+            <div class="step-node">3</div>
+            <div class="step-line"></div>
+            <div class="step-node">4</div>
+            <div class="step-line"></div>
+            <div class="step-node">5</div>
+            <div class="step-line"></div>
+            <div class="step-node">6</div>
+            <div class="step-line"></div>
+            <div class="step-node">7</div>
+            <div class="step-line"></div>
+            <div class="step-node">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 생성했다고 생각되는 이미지를 선택하세요.</h2>
+          <p class="test-subtitle">* 중복 선택 가능</p>
+          <div class="selection-count">1/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-image" id="image-grid">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-image-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-image-next">다음</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. IMAGE TEST 2 -->
+    <section id="screen-image-test-2" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node completed">1</div>
+            <div class="step-line completed"></div>
+            <div class="step-node active">2</div>
+            <div class="step-line"></div>
+            <div class="step-node">3</div>
+            <div class="step-line"></div>
+            <div class="step-node">4</div>
+            <div class="step-line"></div>
+            <div class="step-node">5</div>
+            <div class="step-line"></div>
+            <div class="step-node">6</div>
+            <div class="step-line"></div>
+            <div class="step-node">7</div>
+            <div class="step-line"></div>
+            <div class="step-node">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 생성했다고 생각되는 이미지를 선택하세요.</h2>
+          <p class="test-subtitle">* 중복 선택 가능</p>
+          <div class="selection-count">2/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-image" id="image-grid-2">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-image2-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-image2-next">다음</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4.5. IMAGE TEST 3 -->
+    <section id="screen-image-test-3" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node completed">1</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">2</div>
+            <div class="step-line completed"></div>
+            <div class="step-node active">3</div>
+            <div class="step-line"></div>
+            <div class="step-node">4</div>
+            <div class="step-line"></div>
+            <div class="step-node">5</div>
+            <div class="step-line"></div>
+            <div class="step-node">6</div>
+            <div class="step-line"></div>
+            <div class="step-node">7</div>
+            <div class="step-line"></div>
+            <div class="step-node">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 생성했다고 생각되는 이미지를 선택하세요.</h2>
+          <p class="test-subtitle">* 중복 선택 가능</p>
+          <div class="selection-count">3/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-image" id="image-grid-3">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-image3-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-image3-next">다음</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4.6. IMAGE TEST 4 -->
+    <section id="screen-image-test-4" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node completed">1</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">2</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">3</div>
+            <div class="step-line completed"></div>
+            <div class="step-node active">4</div>
+            <div class="step-line"></div>
+            <div class="step-node">5</div>
+            <div class="step-line"></div>
+            <div class="step-node">6</div>
+            <div class="step-line"></div>
+            <div class="step-node">7</div>
+            <div class="step-line"></div>
+            <div class="step-node">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 생성했다고 생각되는 이미지를 선택하세요.</h2>
+          <p class="test-subtitle">* 중복 선택 가능</p>
+          <div class="selection-count">4/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-image" id="image-grid-4">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-image4-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-image4-next">다음</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4.7. IMAGE TEST 5 -->
+    <section id="screen-image-test-5" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node completed">1</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">2</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">3</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">4</div>
+            <div class="step-line completed"></div>
+            <div class="step-node active">5</div>
+            <div class="step-line"></div>
+            <div class="step-node">6</div>
+            <div class="step-line"></div>
+            <div class="step-node">7</div>
+            <div class="step-line"></div>
+            <div class="step-node">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 생성했다고 생각되는 이미지를 선택하세요.</h2>
+          <p class="test-subtitle">* 중복 선택 가능</p>
+          <div class="selection-count">5/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-image" id="image-grid-5">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-image5-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-image5-next">다음</button>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- 6. WEBTOON TEST -->
+    <section id="screen-webtoon-test" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node completed">1</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">2</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">3</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">4</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">5</div>
+            <div class="step-line completed"></div>
+            <div class="step-node active">6</div>
+            <div class="step-line"></div>
+            <div class="step-node">7</div>
+            <div class="step-line"></div>
+            <div class="step-node">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 생성했다고 생각되는 일러스트를 선택하세요.</h2>
+          <p class="test-subtitle">* 중복 선택 가능</p>
+          <div class="selection-count">6/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-image" id="webtoon-grid">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-webtoon-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-webtoon-next">다음</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 6.5. PAINTING TEST -->
+    <section id="screen-painting-test" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node completed">1</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">2</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">3</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">4</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">5</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">6</div>
+            <div class="step-line completed"></div>
+            <div class="step-node active">7</div>
+            <div class="step-line"></div>
+            <div class="step-node">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 생성했다고 생각되는 페인팅을 선택하세요.</h2>
+          <p class="test-subtitle">* 중복 선택 가능</p>
+          <div class="selection-count">7/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-image" id="painting-grid">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-painting-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-painting-next">다음</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.6. PAINTING TEST 2 -->
+    <section id="screen-painting-test-2" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node completed">1</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">2</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">3</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">4</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">5</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">6</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">7</div>
+            <div class="step-line completed"></div>
+            <div class="step-node active">8</div>
+            <div class="step-line"></div>
+            <div class="step-node">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 학습한 원본 이미지는 무엇일까요?</h2>
+          <p class="test-subtitle">* 하나만 선택하세요</p>
+          <div class="selection-count">8/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-image" id="painting-grid-2">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-painting2-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-painting2-next">다음</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 5. TEXT TEST -->
+    <section id="screen-text-test" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-center">
+          <div class="step-container">
+            <div class="step-node completed">1</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">2</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">3</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">4</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">5</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">6</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">7</div>
+            <div class="step-line completed"></div>
+            <div class="step-node completed">8</div>
+            <div class="step-line completed"></div>
+            <div class="step-node active">9</div>
+          </div>
+        </div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper test-wrapper">
+        <div class="test-header">
+          <h2 class="test-title">AI가 생성했다고 생각되는 기사 헤드라인을 선택하세요.</h2>
+          <p class="test-subtitle">* 중복 선택 가능</p>
+          <div class="selection-count">9/9</div>
+        </div>
+        <div class="test-body">
+          <div class="gallery-grid grid-text" id="text-container-el">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+        <div class="bottom-navigation">
+          <button class="prev-btn" id="btn-text-prev">이전</button>
+          <button class="editorial-btn disabled" id="btn-text-next">[ 결과 분석하기 ]</button>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- 7. ANALYSIS SCREEN -->
+    <section id="screen-analysis" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+      
+      <div class="content-wrapper">
+        <div class="analysis-center">
+          <h2 class="analysis-title">분석중...</h2>
+          <div class="loader">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+          </div>
+          <div class="analysis-bar-container">
+            <div class="analysis-bar" id="analysis-bar"></div>
+          </div>
+          <div class="analysis-text" id="analysis-status-text">조금만 기다려주세요.<br>당신의 선택을 분석하고 있습니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. PERSONAL RESULT SCREEN -->
+<section id="screen-personal-result" class="screen">
+  <div class="screen-header">
+    <div class="screen-header-left">PROJECT</div>
+    <div class="screen-header-right">ABOUT <span>●</span></div>
+  </div>
+
+  <div class="result-page">
+    <div class="result-hero">
+      <p class="result-kicker">당신의 판단 유형은</p>
+      <h1 id="result-type-name" class="result-main-title">AI 친화형</h1>
+      <p id="result-type-desc" class="result-main-desc">
+        AI 콘텐츠를 비교적 자연스럽게 받아들이는 유형입니다.<br>
+        실제와 AI 생성물의 경계를 크게 의심하지 않는 편이에요.
+      </p>
+    </div>
+
+    <div class="result-card-clean">
+      <div class="result-user-row">
+        <div class="result-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#111">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+        </div>
+        <div class="result-user-info">
+          <div id="result-nickname" class="result-user-name">USER</div>
+          <div id="result-date" class="result-user-date">테스트 완료일: 2026.06.04</div>
+        </div>
+      </div>
+
+      <div class="result-divider"></div>
+
+      <div class="result-score-grid">
+        <div class="result-score-box">
+          <div class="result-score-label">실제 정답률</div>
+          <div id="val-actual" class="result-score-value actual">53%</div>
+          <p class="result-score-desc">전체 문항 중<br>정답을 맞힌 비율입니다.</p>
+        </div>
+
+        <div class="result-score-box">
+          <div class="result-score-label">예상 정답률</div>
+          <div id="val-expected" class="result-score-value expected">50%</div>
+          <p class="result-score-desc">테스트 시작 전<br>스스로 설정한 예상 비율입니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-interpret-card">
+      <div class="interpret-icon">💡</div>
+      <div>
+        <h3>결과 해석</h3>
+        <p>
+          AI 콘텐츠를 자연스럽게 받아들이는 경향이 있습니다.
+          결과물의 완성도나 분위기를 기준으로 판단하는 성향이 강하며,
+          AI 생성물과 실제 창작물의 경계를 크게 의심하지 않는 편입니다.
+        </p>
+      </div>
+    </div>
+
+    <button class="result-next-btn" id="btn-to-answer-stats">
+      정답지와 통계 보기 →
+    </button>
+  </div>
+</section>
+
+    <!-- 8.5. ANSWER STATS SCREEN -->
+    <section id="screen-answer-stats" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-right">ABOUT <span>●</span></div>
+      </div>
+
+      <div class="answer-stats-page">
+        <div class="answer-stats-header">
+          <h2 class="answer-stats-title">정답지와 통계</h2>
+          <p class="answer-stats-sub">각 문제의 정답과 사람들이 많이 선택한 답변을 확인해보세요.</p>
+        </div>
+
+        <div id="answer-stats-list" class="answer-stats-list">
+          <!-- JS로 렌더링 -->
+        </div>
+
+        <button class="result-next-btn" id="btn-to-collective">
+          전체 결과 순위 보기 →
+        </button>
+      </div>
+    </section>
+
+    <!-- 9. COLLECTIVE RESULT SCREEN -->
+    <section id="screen-collective-result" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+
+      <div class="content-wrapper result-wrapper" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="collective-top">
+          <h2 class="collective-title">전체 결과 순위</h2>
+          <p class="collective-desc">사람들은 AI를 얼마나 잘 구별했을까요?</p>
+        </div>
+
+        <div class="table-container" id="leaderboard-container" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column;">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>순위</th>
+                <th>닉네임</th>
+                <th>유형</th>
+                <th>예상 정확도</th>
+                <th>실제 정확도</th>
+                <th>AI 오인율</th>
+                <th>참여일</th>
+              </tr>
+            </thead>
+            <tbody id="collective-result-body">
+              <!-- Injected via JS -->
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px; text-align: left;" id="leaderboard-count">* 실제 정확도 기준 정렬</p>
+
+        <div class="btn-layout-group" style="justify-content: center; margin-top: 20px; flex-shrink: 0; position: relative; z-index: 9999;">
+          <button class="editorial-btn" id="btn-to-ending" style="width: auto; padding: 15px 50px;">인사이트 보기</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. ENDING SCREEN -->
+    <section id="screen-ending" class="screen">
+      <div class="screen-header">
+        <div class="screen-header-left">PROJECT</div>
+        <div class="screen-header-right">ABOUT</div>
+      </div>
+
+      <div class="content-wrapper home-wrapper">
+        <div class="ending-center">
+          <div class="ending-text">
+            우리는 AI를<br>경계한다고 말합니다.<br><br>
+            하지만 이미<br>
+            AI가 만든 이미지와 말,<br>
+            그리고 감정을<br>
+            자연스럽게 소비하고 있습니다.
+          </div>
+          
+        </div>
+
+        <div class="btn-layout-group">
+          <button class="editorial-btn" id="btn-restart">다시 테스트하기</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- 모달: 원본 다시 보기 -->
+  <div id="question-preview-modal" class="question-modal hidden">
+    <div class="question-modal-backdrop"></div>
+
+    <div class="question-modal-card">
+      <button class="question-modal-close" type="button">✕</button>
+
+      <div class="question-modal-header">
+        <p class="question-modal-label">문항 다시 보기</p>
+        <h2 id="question-modal-title">이미지 테스트 1</h2>
+      </div>
+
+      <div id="question-modal-content" class="question-modal-content"></div>
+    </div>
+  </div>
+</body>
+</html>
