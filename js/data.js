@@ -106,9 +106,9 @@ const testData = {
       id: "img3_1",
       title: "초현실적인 숲",
       isAi: true,
-      src: "https://i.postimg.cc/Y23N0Skn/20260603-122437-969ccb03.jpg",
-      tagline: "AI 생성 네온 숲",
-      description: "인공지능이 상상한 네온 빛이 가득한 신비로운 숲 이미지입니다."
+      src: "https://i.postimg.cc/pLdJvVQ2/69122526-60f8-4cd5-89b7-a6e16bbff351.png",
+      tagline: "AI 생성 그래픽 아트",
+      description: "인공지능을 통해 3D 기하학적 텍스처와 그래픽 요소를 조합하여 렌더링한 AI 이미지입니다."
     },
     {
       id: "img3_2",

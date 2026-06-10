@@ -82,7 +82,7 @@ a      { color: inherit; text-decoration: none; }
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--black);
+  color: var(--color-ai, #ff3b8d);
   cursor: pointer;
   justify-self: start;
 }
@@ -749,7 +749,7 @@ input[type="range"].editorial-range:active::-webkit-slider-thumb { transform: sc
 .slider-value-display { text-align: center; }
 
 .slider-bubble {
-  font-size: clamp(4rem, 10vw, 6.5rem);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
   font-weight: 900;
   color: var(--black);
   letter-spacing: -0.07em;
@@ -2454,3 +2454,336 @@ body * {
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
+
+/* ==========================================
+   PROJECT DRAWER (SIDEBAR)
+========================================== */
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  visibility: hidden;
+  transition: visibility 0.4s ease;
+}
+
+.drawer.active {
+  visibility: visible;
+}
+
+/* Backdrop */
+.drawer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.drawer.active .drawer-backdrop {
+  opacity: 1;
+}
+
+/* Drawer Content */
+.drawer-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  background-color: #ffffff;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transform: translate3d(-100%, 0, 0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.drawer.active .drawer-content {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Close Button */
+.drawer-close-btn {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #111111;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  z-index: 10;
+  opacity: 0.6;
+}
+
+.drawer-close-btn:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+/* Drawer Body (Scrollable container) */
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 90px 48px 48px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  scrollbar-width: thin;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .drawer-body {
+    padding: 80px 24px 32px 24px;
+    gap: 40px;
+  }
+  .drawer-close-btn {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+/* Sections */
+.drawer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.drawer-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #888888;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 8px;
+  margin: 0;
+}
+
+.drawer-section-content {
+  color: #333333;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.drawer-section-content p {
+  margin: 0 0 16px 0;
+  word-break: keep-all;
+}
+
+.drawer-section-content p:last-child {
+  margin-bottom: 0;
+}
+
+.project-highlight {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #111111;
+  border-left: 2.5px solid var(--color-ai, #ff3b8d);
+  padding-left: 12px;
+  margin-bottom: 24px !important;
+}
+
+/* Specific Styles for Sections */
+.project-main-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111111;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.02em;
+}
+
+.project-about-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.project-about-list li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #222222;
+}
+
+.project-about-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-ai, #ff3b8d);
+}
+
+/* Project By Section (하단 배치 고정 효과) */
+.project-by-section {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.author-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 4px !important;
+}
+
+.author-role {
+  font-size: 13px;
+  color: #666666;
+  margin-bottom: 4px !important;
+}
+
+.project-date {
+  font-size: 12px;
+  color: #999999;
+  margin-bottom: 24px !important;
+}
+
+.project-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888888;
+}
+
+.contact-email {
+  font-size: 14px;
+  color: #111111;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid #111111;
+  width: fit-content;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.contact-email:hover {
+  color: var(--color-ai, #ff3b8d);
+  border-color: var(--color-ai, #ff3b8d);
+}
+
+/* ==========================================
+   COLLECTIVE CHART SECTION
+========================================== */
+.collective-chart-section {
+  margin-top: 100px;
+  margin-bottom: 60px;
+  width: 100%;
+}
+
+.chart-section-title {
+  font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+  font-weight: 700;
+  text-align: center;
+  color: var(--black);
+  margin-bottom: 36px;
+  letter-spacing: -0.03em;
+  word-break: keep-all;
+}
+
+.chart-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.chart-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.chart-type-name {
+  width: 150px;
+  font-size: clamp(15px, 1.8vw, 18px);
+  font-weight: 700;
+  color: var(--black);
+  text-align: left;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.chart-bar-wrapper {
+  flex-grow: 1;
+  height: 32px;
+  background-color: #F5F5F5; /* 미선택 트랙: 연한 회색 */
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.chart-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #E5E5E5; /* 2위 이하: 기본 연한 회색 막대 */
+  border-radius: 16px;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chart-percent {
+  width: 60px;
+  font-size: clamp(15px, 1.8vw, 18px);
+  font-weight: 700;
+  color: var(--black);
+  text-align: right;
+  letter-spacing: -0.02em;
+}
+
+/* 1위 유형 강조 스타일 (AI 핑크 컬러 연동) */
+.chart-row.highlighted .chart-type-name {
+  color: var(--color-ai, #ff3b8d);
+  font-weight: 800;
+}
+
+.chart-row.highlighted .chart-percent {
+  color: var(--color-ai, #ff3b8d);
+  font-weight: 900;
+  font-size: clamp(17px, 2vw, 20px);
+}
+
+.chart-row.highlighted .chart-bar {
+  background-color: var(--yellow); /* 1위 막대: 프로젝트 메인 형광 노랑 */
+  box-shadow: inset 0 0 0 2px var(--color-ai, #ff3b8d); /* 핑크 아웃라인 액센트 */
+}
+
+/* 모바일 대응 */
+@media (max-width: 600px) {
+  .chart-row {
+    gap: 12px;
+  }
+  .chart-type-name {
+    width: 100px;
+  }
+  .chart-bar-wrapper {
+    height: 24px;
+  }
+}
+

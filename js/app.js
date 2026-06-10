@@ -203,13 +203,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- INITIAL MOCK DATA (Seeding LocalStorage) ---
-  const MOCK_LEADERBOARD = [
-    { id: 'mock_1', nickname: 'MINJI', expectedAccuracy: 90, actualAccuracy: 42, aiMistakeRate: 56, humanMistakeRate: 20, resultType: 'AI 친화형', createdAt: Date.now() - 36000000 },
-    { id: 'mock_2', nickname: 'JIAN', expectedAccuracy: 80, actualAccuracy: 37, aiMistakeRate: 63, humanMistakeRate: 30, resultType: '분위기 몰입러', createdAt: Date.now() - 28800000 },
-    { id: 'mock_3', nickname: 'LEE', expectedAccuracy: 70, actualAccuracy: 75, aiMistakeRate: 30, humanMistakeRate: 15, resultType: '촉 좋은 감별러', createdAt: Date.now() - 21600000 },
-    { id: 'mock_4', nickname: 'SOO', expectedAccuracy: 85, actualAccuracy: 50, aiMistakeRate: 67, humanMistakeRate: 40, resultType: '자신감 MAX형', createdAt: Date.now() - 14400000 },
-    { id: 'mock_5', nickname: 'YUNA', expectedAccuracy: 75, actualAccuracy: 60, aiMistakeRate: 40, humanMistakeRate: 25, resultType: '일단 찍어형', createdAt: Date.now() - 7200000 }
-  ];
+  const MOCK_LEADERBOARD = [];
+
+  // --- FORCE RESET PREVIOUS DATA (Run once for database clean) ---
+  try {
+    if (localStorage.getItem('realOrAiResultsReset_v2') !== 'true') {
+      localStorage.setItem('realOrAiResults', JSON.stringify([]));
+      localStorage.setItem('realOrAiResultsReset_v2', 'true');
+    }
+  } catch (e) {
+    console.error("[Storage] Force reset failed safely:", e);
+  }
 
   // --- LOCALSTORAGE SAFE PARSE HELPERS ---
   function getLocalStorageResults() {
@@ -1127,6 +1131,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const avgAccuracyEl = document.getElementById("val-avg-accuracy");
     if (avgAccuracyEl) avgAccuracyEl.innerText = `${avgAccuracy}%`;
 
+    // 숫자 카운트 애니메이션 헬퍼
+    function animateValue(element, start, end, duration) {
+      if (!element) return;
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 3); // cubic ease-out
+        const current = Math.floor(easeProgress * (end - start) + start);
+        element.innerText = `${current}%`;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          element.innerText = `${end}%`;
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    // 3.5 유형 분포 가로 막대 그래프 렌더링 및 순차 애니메이션 트리거
+    const chartRows = document.querySelectorAll(".chart-row");
+    chartRows.forEach((row, idx) => {
+      const type = row.getAttribute("data-type");
+      const count = typeCounts[type] || 0;
+      const percent = totalCount > 0 ? Math.round((count / totalCount) * 100) : 0;
+      
+      const percentEl = row.querySelector(".chart-percent");
+      if (percentEl) {
+        percentEl.innerText = "0%";
+      }
+
+      if (percent > 0 && type === mostCommonType) {
+        row.classList.add("highlighted");
+      } else {
+        row.classList.remove("highlighted");
+      }
+
+      const bar = row.querySelector(".chart-bar");
+      if (bar) {
+        bar.style.width = "0%";
+        const delay = idx * 150; 
+        setTimeout(() => {
+          bar.style.width = `${percent}%`;
+          if (percentEl && percent > 0) {
+            animateValue(percentEl, 0, percent, 1200); 
+          }
+        }, delay);
+      }
+    });
+
     // 4. 가장 어려웠던 / 쉬웠던 문제 계산
     let hardest = null;
     let easiest = null;
@@ -1558,10 +1612,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- GLOBAL HEADER NAVIGATION EVENTS ---
+  // --- PROJECT DRAWER INITIALIZATION ---
+  const projectDrawer = document.getElementById('project-drawer');
+  const drawerBackdrop = document.getElementById('drawer-backdrop');
+  const drawerCloseBtn = document.getElementById('drawer-close-btn');
+
+  function openDrawer() {
+    if (projectDrawer) {
+      projectDrawer.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeDrawer() {
+    if (projectDrawer) {
+      projectDrawer.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
   const navProject = document.getElementById('nav-project');
   if (navProject) {
-    navProject.addEventListener('click', () => showScreen('home'));
+    navProject.addEventListener('click', (e) => {
+      e.preventDefault();
+      openDrawer();
+    });
   }
+
+  if (drawerBackdrop) {
+    drawerBackdrop.addEventListener('click', closeDrawer);
+  }
+
+  if (drawerCloseBtn) {
+    drawerCloseBtn.addEventListener('click', closeDrawer);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDrawer();
+    }
+  });
 
   const navAbout = document.getElementById('nav-about');
   if (navAbout) {
